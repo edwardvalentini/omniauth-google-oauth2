@@ -71,8 +71,29 @@ module OmniAuth
       end
 
       def custom_build_access_token
+
+        Rails.logger.debug "***** Authing from here *****"
+
+                Rails.logger.debug "***** Authing from here *****"
+
+
+                        Rails.logger.debug "***** Authing from here *****"
+
+
+                                Rails.logger.debug "***** Authing from here *****"
+
+
+                                        Rails.logger.debug "***** Authing from here *****"
+
+
+                                                Rails.logger.debug "***** Authing from here *****"
+
+
+                                                        Rails.logger.debug "***** Authing from here *****"
+                                                        
+
         if request.xhr? && request.params['code'] && !request.params['redirect_uri']
-          Rails.logger.debug "***** Authing from here *****"
+
           verifier = request.params['code']
           client.authorization.code = verifier
           client.authorization.fetch_access_token!
