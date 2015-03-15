@@ -71,10 +71,14 @@ module OmniAuth
       end
 
       def custom_build_access_token
-        if request.xhr? && request.params['code']
+        if request.xhr? && request.params['code'] && !request.params['redirect_uri']
+          Rails.logger.debug "***** Authing from here *****"
           verifier = request.params['code']
-          client.auth_code.get_token(verifier, { :redirect_uri => 'postmessage' }.merge(token_params.to_hash(:symbolize_keys => true)),
-                                     deep_symbolize(options.auth_token_params || {}))
+          client.authorization.code = verifier
+          client.authorization.fetch_access_token!
+
+          # client.auth_code.get_token(verifier, { :redirect_uri => 'postmessage' }.merge(token_params.to_hash(:symbolize_keys => true)),
+          #                            deep_symbolize(options.auth_token_params || {}))
         elsif request.params['code'] && request.params['redirect_uri']
           verifier = request.params['code']
           redirect_uri = request.params['redirect_uri']
